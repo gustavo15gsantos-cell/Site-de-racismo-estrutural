@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ==========================================
-# FUNÇÃO PARA CARREGAR IMAGEM EM BASE64
+# CARREGAR IMAGEM EM BASE64
 # ==========================================
 def carregar_imagem_base64(caminho):
     if os.path.exists(caminho):
@@ -27,7 +27,7 @@ def carregar_imagem_base64(caminho):
 img_base64 = carregar_imagem_base64("imagem_racismo.png")
 
 # ==========================================
-# ESTILO CSS (VISUAL E CABEÇALHO)
+# ESTILO CSS COMPATÍVEL E ROBUSTO
 # ==========================================
 st.markdown("""
 <style>
@@ -41,7 +41,7 @@ st.markdown("""
         padding-bottom: 3rem;
     }
 
-    /* CARD DO CABEÇALHO */
+    /* CARD CENTRALIZADO DO CABEÇALHO */
     .header-card {
         display: flex;
         align-items: center;
@@ -80,24 +80,24 @@ st.markdown("""
         margin-bottom: 30px;
     }
 
-    /* ESTILO DAS PERGUNTAS E BOTÕES */
     .numero-pergunta {
         color: #6d28d9;
         font-size: 15px;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 1px;
+        margin-top: 20px;
         margin-bottom: 8px;
     }
 
     .pergunta-texto {
         font-size: 24px;
-        font-weight: 700;
+        font-weight: 750;
         color: #1e293b;
         margin-bottom: 20px;
     }
 
-    /* CARTÃO DO RODAPÉ */
+    /* RODAPÉ */
     .rodape-card {
         background: rgba(255, 255, 255, 0.9);
         border: 1px solid #e0e7ff;
@@ -127,9 +127,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
 # ==========================================
-# BASE DE DADOS DAS PERGUNTAS
+# PERGUNTAS DO QUIZ
 # ==========================================
 perguntas = [
     {
@@ -235,7 +234,7 @@ perguntas = [
 ]
 
 # ==========================================
-# INICIALIZAÇÃO DO ESTADO DA SESSÃO
+# ESTADO DA SESSÃO (SESSION STATE)
 # ==========================================
 if "indice_pergunta" not in st.session_state:
     st.session_state.indice_pergunta = 0
@@ -267,7 +266,7 @@ letras = ["A", "B", "C", "D"]
 total_perguntas = len(perguntas)
 
 # ==========================================
-# ECRÃ FINAL / RESULTADO
+# RESULTADO FINAL
 # ==========================================
 if st.session_state.indice_pergunta >= total_perguntas:
     st.balloons()
@@ -287,16 +286,53 @@ if st.session_state.indice_pergunta >= total_perguntas:
         st.rerun()
 
 # ==========================================
-# EXIBIÇÃO DA PERGUNTA ATUAL
+# APRESENTAÇÃO DA PERGUNTA ATUAL
 # ==========================================
 else:
     idx = st.session_state.indice_pergunta
     q = perguntas[idx]
 
-    # Barra de progresso
     st.progress(idx / total_perguntas)
 
     st.markdown(f'<div class="numero-pergunta">Pergunta {idx + 1} de {total_perguntas}</div>', unsafe_allow_html=True)
     st.markdown(f'<div class="pergunta-texto">{q["pergunta"]}</div>', unsafe_allow_html=True)
 
     opcoes = [f"{letras[i]}) {opt}" for i, opt in enumerate(q["opcoes"])]
+    
+    escolha = st.radio("Escolha uma opção abaixo:", opcoes, key=f"radio_{idx}")
+
+    st.write("")
+
+    if not st.session_state.confirmado:
+        if st.button("✅ Confirmar Resposta", use_container_width=True):
+            st.session_state.confirmado = True
+            st.session_state.escolha_usuario = opcoes.index(escolha)
+            if st.session_state.escolha_usuario == q["resposta"]:
+                st.session_state.pontuacao += 1
+            st.rerun()
+
+    else:
+        if st.session_state.escolha_usuario == q["resposta"]:
+            st.success("🎉 Resposta Correta!")
+        else:
+            st.error("❌ Resposta Incorreta!")
+            correta_idx = q["resposta"]
+            st.info(f"💡 Resposta correta: **{letras[correta_idx]}) {q['opcoes'][correta_idx]}**")
+
+        st.write(f"🏆 Pontuação atual: **{st.session_state.pontuacao} / {total_perguntas}**")
+        st.write("")
+
+        if st.button("➡️ Próxima Pergunta", use_container_width=True):
+            st.session_state.indice_pergunta += 1
+            st.session_state.confirmado = False
+            st.rerun()
+
+# ==========================================
+# RODAPÉ
+# ==========================================
+st.markdown("""
+    <div class="rodape-card">
+        <div class="rodape-texto">🧠 Aprender também é uma forma de transformar a sociedade.</div>
+        <div class="rodape-autores">Feito por: Gustavo Gonçalves e Catharina Oliani</div>
+    </div>
+""", unsafe_allow_html=True)
