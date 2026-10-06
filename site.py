@@ -16,7 +16,6 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-
     .stApp {
         background: linear-gradient(
             135deg,
@@ -148,6 +147,22 @@ st.markdown("""
         margin-top: 20px;
     }
 
+    .pontuacao-final {
+        text-align: center;
+        font-size: 60px;
+        font-weight: 800;
+        color: #6d28d9 !important;
+        margin-top: 30px;
+    }
+
+    .autores-final {
+        text-align: center;
+        color: #4c1d95 !important;
+        font-size: 17px;
+        font-weight: 700;
+        margin-top: 30px;
+    }
+
     .rodape {
         text-align: center;
         color: #64748b !important;
@@ -161,16 +176,15 @@ st.markdown("""
         font-size: 15px;
         font-weight: 700;
     }
-
 </style>
 """, unsafe_allow_html=True)
+
 
 # ==========================================
 # PERGUNTAS
 # ==========================================
 
 perguntas = [
-
     {
         "pergunta": "O que significa racismo estrutural?",
         "opcoes": [
@@ -238,6 +252,7 @@ perguntas = [
     }
 ]
 
+
 # ==========================================
 # CONFIGURAÇÃO DO ESTADO
 # ==========================================
@@ -253,6 +268,7 @@ if "respondida" not in st.session_state:
 
 if "resposta_usuario" not in st.session_state:
     st.session_state.resposta_usuario = None
+
 
 # ==========================================
 # CABEÇALHO
@@ -270,116 +286,33 @@ st.markdown(
 
 letras = ["A", "B", "C", "D"]
 
+
 # ==========================================
 # RESULTADO FINAL
 # ==========================================
 
 if st.session_state.pergunta_atual >= len(perguntas):
 
-    st.markdown(
-        '<div class="resultado">🏆 Quiz finalizado!</div>',
-        unsafe_allow_html=True
-    )
-
-    st.write("")
-
     pontuacao = st.session_state.pontuacao
     total = len(perguntas)
-    porcentagem = (pontuacao / total) * 100
 
     st.markdown(
-        f"""
-        <div style="
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 25px rgba(76, 29, 149, 0.15);
-            margin: 20px 0;
-        ">
-
-            <div style="
-                font-size: 18px;
-                color: #64748b;
-                margin-bottom: 10px;
-                font-weight: 600;
-            ">
-                🎯 SUA PONTUAÇÃO FINAL
-            </div>
-
-            <div style="
-                font-size: 56px;
-                font-weight: 800;
-                color: #6d28d9;
-            ">
-                {pontuacao} / {total}
-            </div>
-
-            <div style="
-                font-size: 20px;
-                font-weight: 600;
-                color: #475569;
-                margin-top: 8px;
-            ">
-                Você acertou {pontuacao} de {total} perguntas!
-            </div>
-
-            <div style="
-                font-size: 19px;
-                color: #7c3aed;
-                font-weight: 600;
-                margin-top: 10px;
-            ">
-                📊 Aproveitamento: {porcentagem:.0f}%
-            </div>
-
-        </div>
-        """,
+        '<div class="resultado">🏆 Resultado</div>',
         unsafe_allow_html=True
     )
 
-    st.progress(porcentagem / 100)
+    st.markdown(
+        f'<div class="pontuacao-final">{pontuacao} / {total}</div>',
+        unsafe_allow_html=True
+    )
 
-    st.write("")
+    st.markdown(
+        '<div class="autores-final">'
+        'Feito por: Gustavo Gonçalves e Catharina Oliani'
+        '</div>',
+        unsafe_allow_html=True
+    )
 
-    if porcentagem == 100:
-
-        st.success(
-            "🌟 Perfeito! Você acertou todas as perguntas!"
-        )
-
-    elif porcentagem >= 70:
-
-        st.success(
-            "👏 Muito bem! Você teve um excelente resultado!"
-        )
-
-    elif porcentagem >= 50:
-
-        st.warning(
-            "👍 Bom resultado! Continue aprendendo sobre o tema."
-        )
-
-    else:
-
-        st.info(
-            "📚 Continue estudando. O conhecimento é importante "
-            "para combater o preconceito."
-        )
-
-    st.write("")
-
-    if st.button(
-        "🔄 Jogar novamente",
-        use_container_width=True
-    ):
-
-        st.session_state.pergunta_atual = 0
-        st.session_state.pontuacao = 0
-        st.session_state.respondida = False
-        st.session_state.resposta_usuario = None
-
-        st.rerun()
 
 # ==========================================
 # PERGUNTAS DO QUIZ
@@ -388,7 +321,6 @@ if st.session_state.pergunta_atual >= len(perguntas):
 else:
 
     numero = st.session_state.pergunta_atual
-
     pergunta = perguntas[numero]
 
     progresso = numero / len(perguntas)
@@ -419,20 +351,16 @@ else:
     st.write("")
 
     # ==========================================
-    # BOTÃO RESPONDER
+    # RESPONDER
     # ==========================================
 
     if not st.session_state.respondida:
 
-        if st.button(
-            "✅ Responder",
-            use_container_width=True
-        ):
+        if st.button("✅ Responder", use_container_width=True):
 
             indice = opcoes_formatadas.index(resposta)
 
             st.session_state.resposta_usuario = indice
-
             st.session_state.respondida = True
 
             if indice == pergunta["resposta"]:
@@ -441,7 +369,7 @@ else:
             st.rerun()
 
     # ==========================================
-    # MOSTRAR RESULTADO DA RESPOSTA
+    # RESULTADO DA RESPOSTA
     # ==========================================
 
     else:
@@ -450,15 +378,11 @@ else:
 
         if indice == pergunta["resposta"]:
 
-            st.success(
-                "🎉 Resposta correta!"
-            )
+            st.success("🎉 Resposta correta!")
 
         else:
 
-            st.error(
-                "❌ Resposta incorreta!"
-            )
+            st.error("❌ Resposta incorreta!")
 
             resposta_correta = pergunta["resposta"]
 
@@ -477,40 +401,30 @@ else:
 
         st.write("")
 
-        # ==========================================
-        # PRÓXIMA PERGUNTA
-        # ==========================================
-
-        if st.button(
-            "➡️ Próxima pergunta",
-            use_container_width=True
-        ):
+        if st.button("➡️ Próxima pergunta", use_container_width=True):
 
             st.session_state.pergunta_atual += 1
-
             st.session_state.respondida = False
-
             st.session_state.resposta_usuario = None
 
             st.rerun()
+
 
 # ==========================================
 # RODAPÉ
 # ==========================================
 
-st.markdown(
-    """
-    <div class="rodape">
+if st.session_state.pergunta_atual < len(perguntas):
 
-        🧠 Aprender também é uma forma de transformar a sociedade.
-
-        <br><br>
-
-        <span class="autores">
-            Feito por: Gustavo Gonçalves e Catharina Oliani
-        </span>
-
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    st.markdown(
+        """
+        <div class="rodape">
+            🧠 Aprender também é uma forma de transformar a sociedade.
+            <br><br>
+            <span class="autores">
+                Feito por: Gustavo Gonçalves e Catharina Oliani
+            </span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
