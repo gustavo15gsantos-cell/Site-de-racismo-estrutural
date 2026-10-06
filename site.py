@@ -27,17 +27,19 @@ def carregar_imagem_base64(caminhos):
                 pass
     return None
 
-# Tenta carregar imagem_racismo_2.png ou imagem_racismo.png
 img_base64 = carregar_imagem_base64(["imagem_racismo_2.png", "imagem_racismo.png"])
 
 # ==========================================
-# ESTILO CSS COM SIMBOLOS/LOGOS LATERAIS
+# ESTILO CSS COM FUNDO E EFEITOS DETALHADOS
 # ==========================================
 st.markdown("""
 <style>
-    /* FUNDO DA PÁGINA */
+    /* FUNDO DA PÁGINA COM LUZES DE AMBIENTE */
     .stApp {
-        background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #e0f2fe 100%);
+        background: radial-gradient(circle at 10% 20%, rgba(192, 132, 252, 0.15) 0%, transparent 40%),
+                    radial-gradient(circle at 90% 80%, rgba(129, 140, 248, 0.15) 0%, transparent 40%),
+                    linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #e0f2fe 100%);
+        background-attachment: fixed;
     }
 
     .block-container {
@@ -48,34 +50,64 @@ st.markdown("""
         z-index: 2;
     }
 
-    /* DECORAÇÃO LATERAL (LOGOS DE FUNDO NAS LINHAS AMARELAS) */
+    /* DECORAÇÃO LATERAL (LOGOS FLUTUANTES COM GLOW E DETALHES) */
     .bg-decor {
         position: fixed;
         top: 50%;
         z-index: 1;
         pointer-events: none;
-        opacity: 0.22; /* Opacidade elegante de marca d'água */
-        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* CÍRCULO ILUMINADO ATRÁS DA LOGO PARA DAR DESTAQUE */
+    .bg-decor-glow {
+        position: relative;
+        padding: 20px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.18) 0%, rgba(255, 255, 255, 0) 70%);
     }
 
     .bg-decor-left {
-        left: 30px;
-        transform: translateY(-50%) rotate(-12deg);
+        left: 20px;
+        animation: floatLeft 6s ease-in-out infinite;
     }
 
     .bg-decor-right {
-        right: 30px;
-        transform: translateY(-50%) rotate(12deg);
+        right: 20px;
+        animation: floatRight 6s ease-in-out infinite;
     }
 
     .bg-decor img {
-        width: 250px;
+        width: 280px;
         height: auto;
-        max-width: 20vw;
-        filter: drop-shadow(0 10px 20px rgba(76, 29, 149, 0.15));
+        max-width: 22vw;
+        opacity: 0.35; /* Aumentado para revelar melhor os detalhes */
+        filter: drop-shadow(0 12px 28px rgba(124, 58, 237, 0.25)) contrast(1.08) brightness(1.02);
+        transition: all 0.5s ease;
     }
 
-    /* CARD DO CABEÇALHO (COMPUTADOR) */
+    /* ANIMAÇÕES DE FLUTUAÇÃO */
+    @keyframes floatLeft {
+        0%, 100% {
+            transform: translateY(-50%) rotate(-10deg) scale(1);
+        }
+        50% {
+            transform: translateY(-56%) rotate(-7deg) scale(1.03);
+        }
+    }
+
+    @keyframes floatRight {
+        0%, 100% {
+            transform: translateY(-50%) rotate(10deg) scale(1);
+        }
+        50% {
+            transform: translateY(-44%) rotate(13deg) scale(1.03);
+        }
+    }
+
+    /* CARD DO CABEÇALHO */
     .header-card {
         display: flex;
         align-items: center;
@@ -84,7 +116,7 @@ st.markdown("""
         background-color: #ffffff;
         padding: 16px 36px;
         border-radius: 24px;
-        box-shadow: 0 8px 24px rgba(76, 29, 149, 0.08);
+        box-shadow: 0 10px 30px rgba(76, 29, 149, 0.1);
         border: 2px solid #e0e7ff;
         width: fit-content;
         margin: 0 auto 15px auto;
@@ -182,7 +214,7 @@ st.markdown("""
 
     /* RODAPÉ */
     .rodape-card {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.95);
         border: 1px solid #e0e7ff;
         border-radius: 20px;
         padding: 20px;
@@ -209,11 +241,11 @@ st.markdown("""
     }
 
     /* ==========================================
-       REGRAS DE RESPONSIVIDADE E ADAPTAÇÃO
+       RESPONSIVIDADE E DISPOSITIVOS MÓVEIS
        ========================================== */
-    @media (max-width: 1150px) {
+    @media (max-width: 1200px) {
         .bg-decor {
-            display: none !important; /* Esconde marcas d'água laterais quando a tela encolher */
+            display: none !important; /* Esconde decorações laterais em telas médias/pequenas */
         }
     }
 
@@ -294,15 +326,19 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # ==========================================
-# DESENHAR DECORAÇÕES NAS LATERAIS
+# DESENHAR DECORAÇÕES FLUTUANTES COM BRILHO
 # ==========================================
 if img_base64:
     st.markdown(f"""
         <div class="bg-decor bg-decor-left">
-            <img src="{img_base64}" alt="Símbolo Racismo Não é Opção">
+            <div class="bg-decor-glow">
+                <img src="{img_base64}" alt="Símbolo Racismo Não é Opção">
+            </div>
         </div>
         <div class="bg-decor bg-decor-right">
-            <img src="{img_base64}" alt="Símbolo Racismo Não é Opção">
+            <div class="bg-decor-glow">
+                <img src="{img_base64}" alt="Símbolo Racismo Não é Opção">
+            </div>
         </div>
     """, unsafe_allow_html=True)
 
