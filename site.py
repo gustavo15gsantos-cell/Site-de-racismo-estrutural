@@ -27,10 +27,11 @@ def carregar_imagem_base64(caminho):
 img_base64 = carregar_imagem_base64("imagem_racismo.png")
 
 # ==========================================
-# ESTILO CSS COMPATÍVEL E ROBUSTO
+# ESTILO CSS CORRIGIDO (ALTO CONTRASTE)
 # ==========================================
 st.markdown("""
 <style>
+    /* FUNDO DA PÁGINA */
     .stApp {
         background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #e0f2fe 100%);
     }
@@ -41,7 +42,7 @@ st.markdown("""
         padding-bottom: 3rem;
     }
 
-    /* CARD CENTRALIZADO DO CABEÇALHO */
+    /* CARD DO CABEÇALHO */
     .header-card {
         display: flex;
         align-items: center;
@@ -56,7 +57,6 @@ st.markdown("""
         margin: 0 auto 15px auto;
     }
 
-    /* LOGÓTIPO LIGEIRAMENTE MAIOR QUE O TÍTULO */
     .header-logo {
         height: 95px;
         width: auto;
@@ -93,8 +93,54 @@ st.markdown("""
     .pergunta-texto {
         font-size: 24px;
         font-weight: 750;
-        color: #1e293b;
+        color: #0f172a;
         margin-bottom: 20px;
+    }
+
+    /* CORREÇÃO DO TEXTO DO ST.RADIO PARA ALTO CONTRASTE */
+    div[data-testid="stRadio"] label {
+        color: #0f172a !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+    }
+
+    div[data-testid="stRadio"] label p {
+        color: #0f172a !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+    }
+
+    div[data-testid="stRadio"] div[role="radiogroup"] > label {
+        background-color: #ffffff !important;
+        padding: 12px 18px !important;
+        border-radius: 14px !important;
+        border: 2px solid #cbd5e1 !important;
+        margin-bottom: 10px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        transition: all 0.2s ease;
+    }
+
+    div[data-testid="stRadio"] div[role="radiogroup"] > label:hover {
+        border-color: #7c3aed !important;
+        background-color: #f3e8ff !important;
+    }
+
+    /* ESTILO DOS BOTÕES */
+    .stButton > button {
+        background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
+        color: #ffffff !important;
+        border: none !important;
+        border-radius: 14px !important;
+        font-size: 17px !important;
+        font-weight: 700 !important;
+        padding: 12px !important;
+        box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3) !important;
+        transition: all 0.2s ease;
+    }
+
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4) !important;
     }
 
     /* RODAPÉ */
@@ -112,7 +158,7 @@ st.markdown("""
         color: #475569;
         font-size: 15px;
         font-weight: 600;
-        margin-bottom: 10px;
+        margin-bottom: 12px;
     }
 
     .rodape-autores {
@@ -234,7 +280,7 @@ perguntas = [
 ]
 
 # ==========================================
-# ESTADO DA SESSÃO (SESSION STATE)
+# ESTADO DA SESSÃO
 # ==========================================
 if "indice_pergunta" not in st.session_state:
     st.session_state.indice_pergunta = 0
@@ -266,7 +312,7 @@ letras = ["A", "B", "C", "D"]
 total_perguntas = len(perguntas)
 
 # ==========================================
-# RESULTADO FINAL
+# ECRÃ FINAL / RESULTADO
 # ==========================================
 if st.session_state.indice_pergunta >= total_perguntas:
     st.balloons()
@@ -286,7 +332,7 @@ if st.session_state.indice_pergunta >= total_perguntas:
         st.rerun()
 
 # ==========================================
-# APRESENTAÇÃO DA PERGUNTA ATUAL
+# EXIBIÇÃO DA PERGUNTA ATUAL
 # ==========================================
 else:
     idx = st.session_state.indice_pergunta
