@@ -27,7 +27,7 @@ def carregar_imagem_base64(caminho):
 img_base64 = carregar_imagem_base64("imagem_racismo.png")
 
 # ==========================================
-# ESTILO CSS COM RESPONSIVIDADE PARA TELEMÓVEL
+# ESTILO CSS COM AJUSTE DE MARGEM PARA TELEMÓVEL
 # ==========================================
 st.markdown("""
 <style>
@@ -180,25 +180,27 @@ st.markdown("""
        ========================================== */
     @media (max-width: 600px) {
         .block-container {
-            padding-top: 1rem !important;
+            padding-top: 3.5rem !important; /* Aumentado para descer o conteúdo longe do topo do telemóvel */
             padding-bottom: 1.5rem !important;
             padding-left: 0.8rem !important;
             padding-right: 0.8rem !important;
         }
 
         .header-card {
-            padding: 10px 18px !important;
+            padding: 10px 16px !important;
             gap: 12px !important;
             border-radius: 18px !important;
             width: 100% !important;
+            margin-top: 15px !important; /* Desloca o cabeçalho para baixo */
+            margin-bottom: 15px !important;
         }
 
         .header-logo {
-            height: 55px !important;
+            height: 48px !important;
         }
 
         .titulo-principal {
-            font-size: 34px !important;
+            font-size: 30px !important;
         }
 
         .subtitulo {
@@ -213,7 +215,7 @@ st.markdown("""
         }
 
         .pergunta-texto {
-            font-size: 19px !important;
+            font-size: 18px !important;
             margin-bottom: 15px !important;
         }
 
