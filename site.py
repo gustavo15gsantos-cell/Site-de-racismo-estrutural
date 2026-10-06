@@ -31,17 +31,8 @@ st.markdown("""
         padding-bottom: 3rem;
     }
 
-    /* CENTRALIZA A IMAGEM */
-    .imagem-centralizada {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
     .titulo {
-        text-align: center;
+        text-align: left;
         font-size: 48px;
         font-weight: 800;
         color: #4c1d95 !important;
@@ -53,8 +44,8 @@ st.markdown("""
         font-size: 30px;
         font-weight: 800;
         color: #4c1d95 !important;
-        margin-top: 80px;
-        margin-bottom: 80px;
+        margin-top: 30px;
+        margin-bottom: 40px;
     }
 
     .numero {
@@ -283,20 +274,20 @@ if "resposta_usuario" not in st.session_state:
 # CABEÇALHO
 # ==========================================
 
-# IMAGEM CENTRALIZADA ACIMA DO TÍTULO
+# Imagem no canto superior esquerdo e título Quiz ao lado
+col1, col2 = st.columns([1, 5])
 
-col1, col2, col3 = st.columns([1, 2, 1])
-
-with col2:
+with col1:
     st.image(
         "imagem_racismo.png",
-        width=180
+        width=100
     )
 
-st.markdown(
-    '<div class="titulo">🧠 Quiz</div>',
-    unsafe_allow_html=True
-)
+with col2:
+    st.markdown(
+        '<div class="titulo" style="margin-top: 18px;">🧠 Quiz</div>',
+        unsafe_allow_html=True
+    )
 
 st.markdown(
     '<div class="subtitulo">Racismo Estrutural</div>',
