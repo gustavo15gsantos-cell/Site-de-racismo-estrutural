@@ -231,7 +231,6 @@ perguntas = [
         ],
         "resposta": 1
     },
-
     {
         "pergunta": "Onde o racismo estrutural pode aparecer?",
         "opcoes": [
@@ -242,7 +241,6 @@ perguntas = [
         ],
         "resposta": 2
     },
-
     {
         "pergunta": "Qual é uma possível consequência do racismo estrutural?",
         "opcoes": [
@@ -253,7 +251,6 @@ perguntas = [
         ],
         "resposta": 0
     },
-
     {
         "pergunta": "Qual atitude pode ajudar no combate ao racismo?",
         "opcoes": [
@@ -264,7 +261,6 @@ perguntas = [
         ],
         "resposta": 2
     },
-
     {
         "pergunta": "Por que estudar o racismo estrutural é importante?",
         "opcoes": [
@@ -275,7 +271,6 @@ perguntas = [
         ],
         "resposta": 0
     },
-
     {
         "pergunta": "O racismo estrutural está relacionado apenas às atitudes individuais?",
         "opcoes": [
@@ -294,4 +289,196 @@ perguntas = [
 # ==========================================
 
 if "pergunta_atual" not in st.session_state:
-    st.session_state.pergunta_atual =
+    st.session_state.pergunta_atual = 0
+
+if "pontuacao" not in st.session_state:
+    st.session_state.pontuacao = 0
+
+if "respondida" not in st.session_state:
+    st.session_state.respondida = False
+
+if "resposta_usuario" not in st.session_state:
+    st.session_state.resposta_usuario = None
+
+
+# ==========================================
+# CABEÇALHO
+# ==========================================
+
+if img_base64:
+    st.markdown(
+        f"""
+        <div class="header-card">
+            <img src="{img_base64}" class="header-logo" alt="Logótipo">
+            <div class="titulo-principal">🧠 Quiz</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+else:
+    st.markdown(
+        """
+        <div class="header-card">
+            <div class="titulo-principal">🧠 Quiz</div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+st.markdown(
+    '<div class="subtitulo">Racismo Estrutural</div>',
+    unsafe_allow_html=True
+)
+
+
+letras = ["A", "B", "C", "D"]
+
+
+# ==========================================
+# RESULTADO FINAL
+# ==========================================
+
+if st.session_state.pergunta_atual >= len(perguntas):
+
+    pontuacao = st.session_state.pontuacao
+    total = len(perguntas)
+
+    st.markdown(
+        '<div class="resultado">🏆 Resultado</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'<div class="pontuacao-final">{pontuacao} / {total}</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="autores-final">'
+        'Feito por: Gustavo Gonçalves e Catharina Oliani'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+
+# ==========================================
+# PERGUNTAS DO QUIZ
+# ==========================================
+
+else:
+
+    numero = st.session_state.pergunta_atual
+    pergunta = perguntas[numero]
+
+    progresso = numero / len(perguntas)
+
+    st.progress(progresso)
+
+    st.markdown(
+        f'<div class="numero">Pergunta {numero + 1} de {len(perguntas)}</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        f'<div class="pergunta">{pergunta["pergunta"]}</div>',
+        unsafe_allow_html=True
+    )
+
+    opcoes_formatadas = [
+        f"{letras[i]}) {opcao}"
+        for i, opcao in enumerate(pergunta["opcoes"])
+    ]
+
+    resposta = st.radio(
+        "Escolha uma alternativa:",
+        opcoes_formatadas,
+        key=f"resposta_{numero}"
+    )
+
+    st.write("")
+
+    # ==========================================
+    # RESPONDER
+    # ==========================================
+
+    if not st.session_state.respondida:
+
+        if st.button(
+            "✅ Responder",
+            use_container_width=True
+        ):
+
+            indice = opcoes_formatadas.index(resposta)
+
+            st.session_state.resposta_usuario = indice
+            st.session_state.respondida = True
+
+            if indice == pergunta["resposta"]:
+                st.session_state.pontuacao += 1
+
+            st.rerun()
+
+    # ==========================================
+    # RESULTADO DA RESPOSTA
+    # ==========================================
+
+    else:
+
+        indice = st.session_state.resposta_usuario
+
+        if indice == pergunta["resposta"]:
+
+            st.success("🎉 Resposta correta!")
+
+        else:
+
+            st.error("❌ Resposta incorreta!")
+
+            resposta_correta = pergunta["resposta"]
+
+            st.info(
+                f"💡 Resposta correta: "
+                f"**{letras[resposta_correta]}) "
+                f"{pergunta['opcoes'][resposta_correta]}**"
+            )
+
+        st.write("")
+
+        st.write(
+            f"🏆 Pontuação atual: "
+            f"**{st.session_state.pontuacao} / {len(perguntas)}**"
+        )
+
+        st.write("")
+
+        if st.button(
+            "➡️ Próxima pergunta",
+            use_container_width=True
+        ):
+
+            st.session_state.pergunta_atual += 1
+            st.session_state.respondida = False
+            st.session_state.resposta_usuario = None
+
+            st.rerun()
+
+
+# ==========================================
+# RODAPÉ
+# ==========================================
+
+if st.session_state.pergunta_atual < len(perguntas):
+
+    st.markdown(
+        """
+        <div class="rodape">
+            🧠 Aprender também é uma forma de transformar a sociedade.
+            <br><br>
+
+            <span class="autores">
+                Feito por: Gustavo Gonçalves e Catharina Oliani
+            </span>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
