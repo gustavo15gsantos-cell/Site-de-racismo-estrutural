@@ -45,7 +45,7 @@ st.markdown("""
         font-weight: 800;
         color: #4c1d95 !important;
         margin-top: 80px;
-        margin-bottom: 80px;
+        margin-bottom: 30px;
     }
 
     .numero {
@@ -284,6 +284,17 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+
+# ==========================================
+# IMAGEM CONTRA O RACISMO
+# ==========================================
+
+st.image(
+    "imagem_racismo.png",
+    width=320
+)
+
+
 letras = ["A", "B", "C", "D"]
 
 
@@ -401,7 +412,10 @@ else:
 
         st.write("")
 
-        if st.button("➡️ Próxima pergunta", use_container_width=True):
+        if st.button(
+            "➡️ Próxima pergunta",
+            use_container_width=True
+        ):
 
             st.session_state.pergunta_atual += 1
             st.session_state.respondida = False
@@ -421,6 +435,7 @@ if st.session_state.pergunta_atual < len(perguntas):
         <div class="rodape">
             🧠 Aprender também é uma forma de transformar a sociedade.
             <br><br>
+
             <span class="autores">
                 Feito por: Gustavo Gonçalves e Catharina Oliani
             </span>
