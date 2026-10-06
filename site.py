@@ -27,7 +27,7 @@ def carregar_imagem_base64(caminho):
 img_base64 = carregar_imagem_base64("imagem_racismo.png")
 
 # ==========================================
-# ESTILO CSS CORRIGIDO (ALTO CONTRASTE)
+# ESTILO CSS COM RESPONSIVIDADE PARA TELEMÓVEL
 # ==========================================
 st.markdown("""
 <style>
@@ -42,7 +42,7 @@ st.markdown("""
         padding-bottom: 3rem;
     }
 
-    /* CARD DO CABEÇALHO */
+    /* CARD DO CABEÇALHO (COMPUTADOR) */
     .header-card {
         display: flex;
         align-items: center;
@@ -55,6 +55,8 @@ st.markdown("""
         border: 2px solid #e0e7ff;
         width: fit-content;
         margin: 0 auto 15px auto;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 
     .header-logo {
@@ -95,9 +97,10 @@ st.markdown("""
         font-weight: 750;
         color: #0f172a;
         margin-bottom: 20px;
+        line-height: 1.35;
     }
 
-    /* CORREÇÃO DO TEXTO DO ST.RADIO PARA ALTO CONTRASTE */
+    /* OPÇÕES DE RESPOSTA (ST.RADIO) */
     div[data-testid="stRadio"] label {
         color: #0f172a !important;
         font-size: 16px !important;
@@ -108,6 +111,7 @@ st.markdown("""
         color: #0f172a !important;
         font-size: 16px !important;
         font-weight: 600 !important;
+        word-break: break-word;
     }
 
     div[data-testid="stRadio"] div[role="radiogroup"] > label {
@@ -125,7 +129,7 @@ st.markdown("""
         background-color: #f3e8ff !important;
     }
 
-    /* ESTILO DOS BOTÕES */
+    /* BOTÕES */
     .stButton > button {
         background: linear-gradient(135deg, #7c3aed, #4f46e5) !important;
         color: #ffffff !important;
@@ -169,6 +173,81 @@ st.markdown("""
         border-radius: 50px;
         font-size: 14px;
         font-weight: 700;
+    }
+
+    /* ==========================================
+       REGRAS DE RESPONSIVIDADE PARA TELEMÓVEIS
+       ========================================== */
+    @media (max-width: 600px) {
+        .block-container {
+            padding-top: 1rem !important;
+            padding-bottom: 1.5rem !important;
+            padding-left: 0.8rem !important;
+            padding-right: 0.8rem !important;
+        }
+
+        .header-card {
+            padding: 10px 18px !important;
+            gap: 12px !important;
+            border-radius: 18px !important;
+            width: 100% !important;
+        }
+
+        .header-logo {
+            height: 55px !important;
+        }
+
+        .titulo-principal {
+            font-size: 34px !important;
+        }
+
+        .subtitulo {
+            font-size: 20px !important;
+            margin-top: 8px !important;
+            margin-bottom: 20px !important;
+        }
+
+        .numero-pergunta {
+            font-size: 13px !important;
+            margin-top: 10px !important;
+        }
+
+        .pergunta-texto {
+            font-size: 19px !important;
+            margin-bottom: 15px !important;
+        }
+
+        div[data-testid="stRadio"] label p {
+            font-size: 14px !important;
+        }
+
+        div[data-testid="stRadio"] div[role="radiogroup"] > label {
+            padding: 10px 12px !important;
+            border-radius: 12px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .stButton > button {
+            font-size: 15px !important;
+            padding: 10px !important;
+            border-radius: 12px !important;
+        }
+
+        .rodape-card {
+            padding: 15px 12px !important;
+            margin-top: 25px !important;
+            border-radius: 16px !important;
+        }
+
+        .rodape-texto {
+            font-size: 13px !important;
+            margin-bottom: 8px !important;
+        }
+
+        .rodape-autores {
+            font-size: 12px !important;
+            padding: 6px 16px !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -317,10 +396,10 @@ total_perguntas = len(perguntas)
 if st.session_state.indice_pergunta >= total_perguntas:
     st.balloons()
     st.markdown(f"""
-        <div style="text-align: center; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-            <h1 style="color: #4c1d95; margin-bottom: 10px;">🏆 Resultado Final</h1>
-            <h2 style="color: #6d28d9; font-size: 50px; margin: 15px 0;">{st.session_state.pontuacao} / {total_perguntas}</h2>
-            <p style="font-size: 18px; color: #475569;">Obrigado por participar!</p>
+        <div style="text-align: center; background: white; padding: 25px 15px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <h1 style="color: #4c1d95; margin-bottom: 10px; font-size: 28px;">🏆 Resultado Final</h1>
+            <h2 style="color: #6d28d9; font-size: 42px; margin: 15px 0;">{st.session_state.pontuacao} / {total_perguntas}</h2>
+            <p style="font-size: 16px; color: #475569;">Obrigado por participar!</p>
         </div>
     """, unsafe_allow_html=True)
     
