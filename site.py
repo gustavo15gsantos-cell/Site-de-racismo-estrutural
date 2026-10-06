@@ -45,7 +45,7 @@ st.markdown("""
         font-weight: 800;
         color: #4c1d95 !important;
         margin-top: 80px;
-        margin-bottom: 30px;
+        margin-bottom: 80px;
     }
 
     .numero {
@@ -274,6 +274,16 @@ if "resposta_usuario" not in st.session_state:
 # CABEÇALHO
 # ==========================================
 
+# IMAGEM ACIMA DO TÍTULO
+
+col1, col2, col3 = st.columns([1, 2, 1])
+
+with col2:
+    st.image(
+        "imagem_racismo.png",
+        width=180
+    )
+
 st.markdown(
     '<div class="titulo">🧠 Quiz</div>',
     unsafe_allow_html=True
@@ -282,16 +292,6 @@ st.markdown(
 st.markdown(
     '<div class="subtitulo">Racismo Estrutural</div>',
     unsafe_allow_html=True
-)
-
-
-# ==========================================
-# IMAGEM CONTRA O RACISMO
-# ==========================================
-
-st.image(
-    "imagem_racismo.png",
-    width=320
 )
 
 
@@ -367,7 +367,10 @@ else:
 
     if not st.session_state.respondida:
 
-        if st.button("✅ Responder", use_container_width=True):
+        if st.button(
+            "✅ Responder",
+            use_container_width=True
+        ):
 
             indice = opcoes_formatadas.index(resposta)
 
