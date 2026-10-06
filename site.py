@@ -228,7 +228,7 @@ st.markdown(estilo_css, unsafe_allow_html=True)
 
 
 # ==========================================
-# PERGUNTAS
+# PERGUNTAS (10 PERGUNTAS AO TODO)
 # ==========================================
 
 perguntas = [
@@ -291,6 +291,46 @@ perguntas = [
             "Não, porque o racismo não existe"
         ],
         "resposta": 1
+    },
+    {
+        "pergunta": "O que são ações afirmativas na sociedade?",
+        "opcoes": [
+            "Medidas e políticas voltadas a reparar desigualdades históricas e promover a inclusão de grupos discriminados",
+            "Regras que proíbem o acesso de certas pessoas às universidades",
+            "Leis aplicadas apenas no ambiente escolar sem impacto social",
+            "Punições aplicadas a crimes ocorridos exclusivamente na internet"
+        ],
+        "resposta": 0
+    },
+    {
+        "pergunta": "Qual é a importância da representatividade nos espaços de poder e de destaque?",
+        "opcoes": [
+            "Apenas uma questão estética e sem efeito real na sociedade",
+            "Permite a diversidade de visões de mundo e serve de inspiração para grupos historicamente marginalizados",
+            "Garante o fim imediato de todas as formas de preconceito",
+            "Acontece de forma espontânea sem necessidade de debate"
+        ],
+        "resposta": 1
+    },
+    {
+        "pergunta": "De que forma o racismo estrutural pode impactar a economia e o mercado de trabalho?",
+        "opcoes": [
+            "Garantindo remuneração igual para todas as pessoas independentemente da etnia",
+            "Através da disparidade salarial e menor presença de negros em cargos de liderança",
+            "Eliminando qualquer tipo de discriminação nos processos seletivos",
+            "Afetando apenas a área do entretenimento"
+        ],
+        "resposta": 1
+    },
+    {
+        "pergunta": "O que significa o conceito de 'letramento racial'?",
+        "opcoes": [
+            "O processo de alfabetização básica de crianças na escola",
+            "A tradução de termos jurídicos sobre Direitos Humanos",
+            "O processo contínuo de reeducação para reconhecer, compreender e combater o racismo",
+            "Um teste de leitura aplicado em processos seletivos"
+        ],
+        "resposta": 2
     }
 ]
 
