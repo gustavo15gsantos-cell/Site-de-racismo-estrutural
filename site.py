@@ -31,6 +31,15 @@ st.markdown("""
         padding-bottom: 3rem;
     }
 
+    /* CENTRALIZA A IMAGEM */
+    .imagem-centralizada {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
     .titulo {
         text-align: center;
         font-size: 48px;
@@ -274,7 +283,7 @@ if "resposta_usuario" not in st.session_state:
 # CABEÇALHO
 # ==========================================
 
-# IMAGEM ACIMA DO TÍTULO
+# IMAGEM CENTRALIZADA ACIMA DO TÍTULO
 
 col1, col2, col3 = st.columns([1, 2, 1])
 
