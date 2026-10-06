@@ -51,24 +51,26 @@ estilo_css = r"""
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 16px;
+        gap: 22px;
         background-color: #ffffff;
-        padding: 12px 28px;
-        border-radius: 20px;
+        padding: 18px 40px;
+        border-radius: 24px;
         box-shadow: 0 8px 24px rgba(76, 29, 149, 0.08);
         border: 2px solid #e0e7ff;
         width: fit-content;
         margin: 10px auto 15px auto;
     }
 
+    /* LOGO MAIOR QUE O NOME DO QUIZ */
     .header-logo {
-        height: 60px;
+        height: 100px;
         width: auto;
         object-fit: contain;
     }
 
+    /* NOME DO QUIZ EM TAMANHO GRANDE */
     .titulo-principal {
-        font-size: 40px;
+        font-size: 60px;
         font-weight: 800;
         color: #4c1d95 !important;
         margin: 0;
@@ -77,10 +79,10 @@ estilo_css = r"""
 
     .subtitulo {
         text-align: center;
-        font-size: 26px;
+        font-size: 30px;
         font-weight: 800;
         color: #4c1d95 !important;
-        margin-top: 10px;
+        margin-top: 12px;
         margin-bottom: 35px;
     }
 
