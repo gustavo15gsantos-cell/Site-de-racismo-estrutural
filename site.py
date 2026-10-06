@@ -29,7 +29,7 @@ img_base64 = carregar_imagem_base64("imagem_racismo.png")
 # ESTILO DO SITE
 # ==========================================
 
-st.markdown("""
+estilo_css = r"""
 <style>
     .stApp {
         background: linear-gradient(
@@ -191,29 +191,40 @@ st.markdown("""
         margin-top: 30px;
     }
 
-    .autores-final {
+    /* CARTÃO E DESIGN DO RODAPÉ */
+    .rodape-card {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid #e0e7ff;
+        border-radius: 20px;
+        padding: 20px 24px;
         text-align: center;
-        color: #4c1d95 !important;
-        font-size: 17px;
-        font-weight: 700;
-        margin-top: 30px;
-    }
-
-    .rodape {
-        text-align: center;
-        color: #64748b !important;
-        font-size: 14px;
-        margin-top: 35px;
+        box-shadow: 0 8px 20px rgba(76, 29, 149, 0.05);
+        margin-top: 40px;
         margin-bottom: 20px;
     }
 
-    .autores {
-        color: #4c1d95 !important;
+    .rodape-texto {
+        color: #475569;
         font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .rodape-autores {
+        display: inline-block;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        color: #ffffff !important;
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
         font-weight: 700;
+        box-shadow: 0 4px 12px rgba(124, 58, 237, 0.2);
     }
 </style>
-""", unsafe_allow_html=True)
+"""
+
+st.markdown(estilo_css, unsafe_allow_html=True)
 
 
 # ==========================================
@@ -306,24 +317,20 @@ if "resposta_usuario" not in st.session_state:
 # ==========================================
 
 if img_base64:
-    st.markdown(
-        f"""
-        <div class="header-card">
-            <img src="{img_base64}" class="header-logo" alt="Logótipo">
-            <div class="titulo-principal">🧠 Quiz</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    cabecalho_html = f"""
+    <div class="header-card">
+        <img src="{img_base64}" class="header-logo" alt="Logótipo">
+        <div class="titulo-principal">🧠 Quiz</div>
+    </div>
+    """
 else:
-    st.markdown(
-        """
-        <div class="header-card">
-            <div class="titulo-principal">🧠 Quiz</div>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    cabecalho_html = """
+    <div class="header-card">
+        <div class="titulo-principal">🧠 Quiz</div>
+    </div>
+    """
+
+st.markdown(cabecalho_html, unsafe_allow_html=True)
 
 st.markdown(
     '<div class="subtitulo">Racismo Estrutural</div>',
@@ -354,9 +361,11 @@ if st.session_state.pergunta_atual >= len(perguntas):
     )
 
     st.markdown(
-        '<div class="autores-final">'
-        'Feito por: Gustavo Gonçalves e Catharina Oliani'
-        '</div>',
+        """
+        <div class="rodape-card">
+            <div class="rodape-autores">Feito por: Gustavo Gonçalves e Catharina Oliani</div>
+        </div>
+        """,
         unsafe_allow_html=True
     )
 
@@ -471,13 +480,9 @@ if st.session_state.pergunta_atual < len(perguntas):
 
     st.markdown(
         """
-        <div class="rodape">
-            🧠 Aprender também é uma forma de transformar a sociedade.
-            <br><br>
-
-            <span class="autores">
-                Feito por: Gustavo Gonçalves e Catharina Oliani
-            </span>
+        <div class="rodape-card">
+            <div class="rodape-texto">🧠 Aprender também é uma forma de transformar a sociedade.</div>
+            <div class="rodape-autores">Feito por: Gustavo Gonçalves e Catharina Oliani</div>
         </div>
         """,
         unsafe_allow_html=True
