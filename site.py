@@ -14,20 +14,24 @@ st.set_page_config(
 # ==========================================
 # CARREGAR IMAGEM EM BASE64
 # ==========================================
-def carregar_imagem_base64(caminho):
-    if os.path.exists(caminho):
-        try:
-            with open(caminho, "rb") as arq:
-                dados = arq.read()
-                return f"data:image/png;base64,{base64.b64encode(dados).decode()}"
-        except Exception:
-            return None
+def carregar_imagem_base64(caminhos):
+    if isinstance(caminhos, str):
+        caminhos = [caminhos]
+    for caminho in caminhos:
+        if os.path.exists(caminho):
+            try:
+                with open(caminho, "rb") as arq:
+                    dados = arq.read()
+                    return f"data:image/png;base64,{base64.b64encode(dados).decode()}"
+            except Exception:
+                pass
     return None
 
-img_base64 = carregar_imagem_base64("imagem_racismo.png")
+# Tenta carregar imagem_racismo_2.png ou imagem_racismo.png
+img_base64 = carregar_imagem_base64(["imagem_racismo_2.png", "imagem_racismo.png"])
 
 # ==========================================
-# ESTILO CSS COM AJUSTE DE MARGEM PARA TELEMÓVEL
+# ESTILO CSS COM SIMBOLOS/LOGOS LATERAIS
 # ==========================================
 st.markdown("""
 <style>
@@ -40,6 +44,35 @@ st.markdown("""
         max-width: 800px;
         padding-top: 2rem;
         padding-bottom: 3rem;
+        position: relative;
+        z-index: 2;
+    }
+
+    /* DECORAÇÃO LATERAL (LOGOS DE FUNDO NAS LINHAS AMARELAS) */
+    .bg-decor {
+        position: fixed;
+        top: 50%;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.22; /* Opacidade elegante de marca d'água */
+        transition: all 0.3s ease;
+    }
+
+    .bg-decor-left {
+        left: 30px;
+        transform: translateY(-50%) rotate(-12deg);
+    }
+
+    .bg-decor-right {
+        right: 30px;
+        transform: translateY(-50%) rotate(12deg);
+    }
+
+    .bg-decor img {
+        width: 250px;
+        height: auto;
+        max-width: 20vw;
+        filter: drop-shadow(0 10px 20px rgba(76, 29, 149, 0.15));
     }
 
     /* CARD DO CABEÇALHO (COMPUTADOR) */
@@ -176,11 +209,17 @@ st.markdown("""
     }
 
     /* ==========================================
-       REGRAS DE RESPONSIVIDADE PARA TELEMÓVEIS
+       REGRAS DE RESPONSIVIDADE E ADAPTAÇÃO
        ========================================== */
+    @media (max-width: 1150px) {
+        .bg-decor {
+            display: none !important; /* Esconde marcas d'água laterais quando a tela encolher */
+        }
+    }
+
     @media (max-width: 600px) {
         .block-container {
-            padding-top: 3.5rem !important; /* Aumentado para descer o conteúdo longe do topo do telemóvel */
+            padding-top: 3.5rem !important;
             padding-bottom: 1.5rem !important;
             padding-left: 0.8rem !important;
             padding-right: 0.8rem !important;
@@ -191,7 +230,7 @@ st.markdown("""
             gap: 12px !important;
             border-radius: 18px !important;
             width: 100% !important;
-            margin-top: 15px !important; /* Desloca o cabeçalho para baixo */
+            margin-top: 15px !important;
             margin-bottom: 15px !important;
         }
 
@@ -253,6 +292,19 @@ st.markdown("""
     }
 </style>
 """, unsafe_allow_html=True)
+
+# ==========================================
+# DESENHAR DECORAÇÕES NAS LATERAIS
+# ==========================================
+if img_base64:
+    st.markdown(f"""
+        <div class="bg-decor bg-decor-left">
+            <img src="{img_base64}" alt="Símbolo Racismo Não é Opção">
+        </div>
+        <div class="bg-decor bg-decor-right">
+            <img src="{img_base64}" alt="Símbolo Racismo Não é Opção">
+        </div>
+    """, unsafe_allow_html=True)
 
 # ==========================================
 # PERGUNTAS DO QUIZ
