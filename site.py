@@ -548,6 +548,6 @@ else:
 st.markdown("""
     <div class="rodape-card">
         <div class="rodape-texto">🧠 Aprender também é uma forma de transformar a sociedade.</div>
-        <div class="rodape-autores">Feito por: Gustavo Gonçalves e Catharina Oliani</div>
+        <div class="rodape-autores">Feito por: Ana Julia, Gustavo Gonçalves e Catharina Oliani</div>
     </div>
 """, unsafe_allow_html=True)
